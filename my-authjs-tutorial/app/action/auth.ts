@@ -9,6 +9,13 @@ export const signInWithGithub = async (formData: FormData) => {
 	})
 };
 
+export const signInWithGoogle = async (formData: FormData) => {
+	await signIn('google', {
+		redirectTo:'/dashboard/todos'
+	}
+	)
+}
+
 
 export const logOutAction = async () => {
 	await signOut({
