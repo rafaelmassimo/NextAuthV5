@@ -1,10 +1,12 @@
 import { logOutAction } from '@/app/action/auth';
 import { auth } from '@/auth';
+import { log } from 'console';
 import Image from 'next/image';
 import React from 'react';
 
 const Todos = async () => {
 	const session = await auth();
+console.log(session);
 
 	return (
 		<div>

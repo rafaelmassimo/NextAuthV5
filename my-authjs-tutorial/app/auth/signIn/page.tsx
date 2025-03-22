@@ -1,4 +1,4 @@
-import { signInWithGithub, signInWithGoogle } from '@/app/action/auth';
+import { signInWithGithub, signInWithGoogle, signInWithZoom } from '@/app/action/auth';
 import React from 'react';
 
 const SignIn = () => {
@@ -11,6 +11,10 @@ const SignIn = () => {
 
 			<form action={signInWithGoogle}>
 			<input  type="submit" value={'Sign in with google'} />
+			</form>
+
+			<form action={signInWithZoom}>
+			<input  type="submit" value={'Sign in with zoom'} />
 			</form>
 		</>
 	);
