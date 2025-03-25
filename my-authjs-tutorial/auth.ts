@@ -1,9 +1,14 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/prismaClient';
+import sgMail from '@sendgrid/mail';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 import Zoom from 'next-auth/providers/zoom';
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+// console.log('SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY);
+// console.log('SENDGRIP_EMAIL_DOMAIN:', process.env.SENDGRIP_EMAIL_DOMAIN);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	// This adapter came from documentation, and the prisma variable I have created in another file and imported here, following documentation
@@ -38,8 +43,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				identifier: string;
 				url: string;
 			}): Promise<void> {
-				console.log('url:', url, identifier);
-				
+				sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+
+				const message = {
+					to: identifier,
+					from: process.env.SENDGRIP_EMAIL_DOMAIN!,
+					subject: 'Continue sign in',
+					text: 'click on this link to continue ' + url,
+				};
+				console.log(message, url);
+
+				sgMail.send(message).then(
+					() => console.log('Email sent successfully'),
+					(error) => console.error('Error sending email:', error),
+				);
 			},
 		},
 	],

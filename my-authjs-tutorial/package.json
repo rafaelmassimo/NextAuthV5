@@ -12,6 +12,8 @@
     "@auth/prisma-adapter": "^2.7.2",
     "@prisma/adapter-pg": "^6.5.0",
     "@prisma/client": "^6.5.0",
+    "@sendgrid/mail": "^8.1.4",
+    "dotenv": "^16.4.7",
     "next": "15.2.3",
     "next-auth": "^5.0.0-beta.25",
     "pg": "^8.14.1",
