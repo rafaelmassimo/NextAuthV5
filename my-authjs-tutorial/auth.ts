@@ -26,6 +26,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			},
 		}),
 		Zoom,
+		{
+			id: 'sendgrid',
+			name: 'Sendgrid',
+			// @ts-ignore
+			type: 'email',
+			async sendVerificationRequest({
+				identifier,
+				url,
+			}: {
+				identifier: string;
+				url: string;
+			}): Promise<void> {
+				console.log('url:', url, identifier);
+				
+			},
+		},
 	],
 	callbacks: {
 		authorized: (params) => {

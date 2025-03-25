@@ -26,3 +26,11 @@ export const logOutAction = async () => {
 		redirectTo: '/auth/signIn',
 	});
 };
+
+export const signInWithEmail = async (formData: FormData) => {
+	const emailAddress = formData.get('email-address') as string || '';
+	await signIn('sendgrid', {
+		redirectTo: '/dashboard/todos',
+		email:emailAddress
+	});
+};
