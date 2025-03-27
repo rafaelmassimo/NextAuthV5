@@ -34,3 +34,12 @@ export const signInWithEmail = async (formData: FormData) => {
 		email:emailAddress
 	});
 };
+
+export const signInWithCrediantials = async (formData: FormData) => {
+	const email = formData.get('email') as string || '';
+	const password = formData.get('password') as string || '';
+	await signIn('credentials', {
+		redirectTo: '/dashboard/todos',
+		email, password
+	});
+};
