@@ -9,9 +9,10 @@ import Credentials from 'next-auth/providers/credentials';
 import credentials from 'next-auth/providers/credentials';
 import email from 'next-auth/providers/email';
 
+import { adjectives, colors, uniqueNamesGenerator } from 'unique-names-generator';
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
-// console.log('SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY);
-// console.log('SENDGRIP_EMAIL_DOMAIN:', process.env.SENDGRIP_EMAIL_DOMAIN);
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	// This adapter came from documentation, and the prisma variable I have created in another file and imported here, following documentation
@@ -79,12 +80,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 					return null;
 				}
 
-				// Validate user and password (add your own logic here)
-				if (user && password === 'yourPasswordValidationLogic') {
-					return user; // Return the user object
-				}
+				//? Validate user and password (add your own logic here)
+				// if (user && password === 'yourPasswordValidationLogic') {
+				// 	return user; // Return the user object
+				// }
 
-				return null; // Return null if authentication fails
+				// return null; // Return null if authentication fails
 			},
 		}),
 	],
@@ -95,4 +96,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			return !!params.auth?.user;
 		},
 	},
+	events: {
+		createUser: async (message) => {
+			const {user} = message;
+			console.log('we just created a new user', user);
+			const randomName = uniqueNamesGenerator({
+				dictionaries:[adjectives, colors]
+			})
+			const organization = await prisma.organization.create({
+				data: {
+					name: randomName,
+					users: {
+						connect: {
+							id: user.id
+						}
+					}
+				}
+			})
+			console.log('Also created an organization',organization);
+			
+		}
+	}
 });

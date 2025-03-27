@@ -43,4 +43,5 @@ next-env.d.ts
 
 # PostgreSQL data directory
 my-authjs-tutorial/pgdata/
+~/my-authjs-tutorial/pgdata
 ~/Doc/s/NextAuthV5/my-authjs-tutorial/pgdata
