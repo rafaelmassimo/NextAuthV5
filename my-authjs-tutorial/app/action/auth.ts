@@ -1,6 +1,7 @@
 'use server';
 
 import { signIn, signOut } from '@/auth';
+import prisma from '@/prismaClient';
 
 export const signInWithGithub = async (formData: FormData) => {
 	console.log('inside sign with github');

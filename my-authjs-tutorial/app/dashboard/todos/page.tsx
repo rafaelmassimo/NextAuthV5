@@ -1,11 +1,18 @@
 import { logOutAction } from '@/app/action/auth';
+import { createTodo } from '@/app/action/todos';
 import { auth } from '@/auth';
-import { log } from 'console';
+import prisma from '@/prismaClient';
+
 import Image from 'next/image';
 import React from 'react';
 
 const Todos = async () => {
 	const session = await auth();
+	const todos = await prisma.todo.findMany({
+		where: {
+			organizationId: session?.organizationId
+		}
+	});
 console.log(session);
 
 	return (
@@ -18,6 +25,13 @@ console.log(session);
 			<form action={logOutAction}>
 				<input type="submit" value={'Logout'} />
 			</form>
+
+			<form action={createTodo}>
+				<input type="text" name='todo' /> {' '} <input type="submit" value={'Add a new todo'} />
+			</form>
+
+			<h3>Todos:</h3>
+			{JSON.stringify(todos, null, 2)}
 		</div>
 	);
 };

@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import { PrismaClient } from "@prisma/client"
 import { prisma } from '@/prismaClient';
 import sgMail from '@sendgrid/mail';
 import GitHub from 'next-auth/providers/github';
