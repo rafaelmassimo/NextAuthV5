@@ -13,6 +13,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
 	// This adapter came from documentation, and the prisma variable I have created in another file and imported here, following documentation
+	// The fact that I'm using the prisma adapter makes next-auth create automatically a new user in my DB through Prisma
 	adapter: PrismaAdapter(prisma),
 	session: {
 		strategy: 'jwt',
